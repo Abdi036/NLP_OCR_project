@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered license plate OCR - Upload car images and extract plate numbers instantly">
+    <title>License Plate OCR - AI Text Extraction</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Background gradients -->
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
+    <div class="gradient-blob blob-3"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="12" width="32" height="20" rx="2" stroke="url(#gradient)" stroke-width="2"/>
+                    <path d="M8 18h24M8 22h24" stroke="url(#gradient)" stroke-width="2"/>
+                    <circle cx="12" cy="20" r="1.5" fill="url(#gradient)"/>
+                    <circle cx="28" cy="20" r="1.5" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Plate OCR</span>
+            </div>
+            <div class="header-badge">
+                <span class="badge-dot"></span>
+                AI Powered
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <h1 class="title">License Plate Recognition</h1>
+                <p class="subtitle">Upload a car image to extract the license plate number using AI</p>
+                
+                <div class="upload-card" id="uploadCard">
+                    <div class="upload-zone" id="uploadZone">
+                        <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3 class="upload-title">Drop your image here</h3>
+                        <p class="upload-text">or click to browse</p>
+                        <p class="upload-hint">Supports: JPG, PNG, WebP (Max 10MB)</p>
+                        <input type="file" id="fileInput" accept="image/jpeg,image/jpg,image/png,image/webp" hidden>
+                    </div>
+                    
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loadingState" style="display: none;">
+                        <div class="spinner"></div>
+                        <p class="loading-text">Processing your image...</p>
+                        <p class="loading-hint">Detecting license plate and extracting text</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2 class="results-title">Extraction Results</h2>
+                    <button class="btn-secondary" id="uploadAnotherBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Upload Another
+                    </button>
+                </div>
+
+                <!-- Plate Number Display -->
+                <div class="plate-display" id="plateDisplay">
+                    <div class="plate-number" id="plateNumber">ABC 1234</div>
+                    <div class="confidence-badge" id="confidenceBadge">
+                        <span class="confidence-label">Confidence:</span>
+                        <span class="confidence-value" id="confidenceValue">95%</span>
+                    </div>
+                </div>
+
+                <!-- Images Display -->
+                <div class="images-grid">
+                    <div class="image-card">
+                        <h3 class="image-label">Original Image</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" src="" alt="Original car image">
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <h3 class="image-label">Detected Plate</h3>
+                        <div class="image-wrapper">
+                            <img id="plateImage" src="" alt="Detected license plate">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error/Warning Messages -->
+                <div class="message-box warning" id="warningBox" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span id="warningMessage"></span>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <div class="message-box error" id="errorBox" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span id="errorMessage"></span>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by OpenCV & EasyOCR | Built with FastAPI</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
