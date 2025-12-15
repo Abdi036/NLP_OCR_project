@@ -34,7 +34,7 @@ Upload a car image → AI detects license plate → Text is extracted and displa
 ### 1. Clone the Repository
 
 ```bash
-cd /home/abdi/Desktop/NLP_OCR_project
+cd /NLP_OCR_project
 ```
 
 ### 2. Create Virtual Environment
